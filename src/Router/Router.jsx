@@ -8,6 +8,11 @@ import DeveloperResources from "../pages/Footer/DeveloperResources";
 import TermsOfServices from "../pages/Footer/TermsOfServices";
 import CookiesPolicy from "../pages/Footer/CookiesPolicy";
 import PrivacyPolicy from "../pages/Footer/PrivacyPolicy";
+import AllArticles from "../components/AllArticles";
+import AddArticle from "../components/AddArticle";
+import UserProfile from "../components/UserProfile";
+import PrivateRoute from "../provider/PrivateRoute";
+import PremiumArticles from "../components/PremiumArticles";
 
 
 export const router = createBrowserRouter([
@@ -31,6 +36,33 @@ export const router = createBrowserRouter([
         path: "register",
         Component: Register,
       },
+      {
+        path : "all-articles",
+        Component : AllArticles
+      },
+      {
+        path : "add-article",
+        element : (
+            <PrivateRoute>
+                <AddArticle></AddArticle>
+            </PrivateRoute>
+        )
+      },
+      {
+        path : "user-profile",
+        Component : UserProfile
+      },
+      {
+        path : "premium-articles",
+        element : (
+            <PrivateRoute>
+                <PremiumArticles></PremiumArticles>
+            </PrivateRoute>
+        )
+      },
+      {
+
+      }
     ],
   },
   {
