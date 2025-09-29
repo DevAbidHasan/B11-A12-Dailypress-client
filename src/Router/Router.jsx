@@ -4,7 +4,6 @@ import HomeLayout from "../layouts/HomeLayout";
 import ErrorPage from "../pages/ErrorPage/Errorpage";
 import Login from "../pages/AuthPages/Login";
 import Register from "../pages/AuthPages/Register";
-
 import DeveloperResources from "../pages/Footer/DeveloperResources";
 import TermsOfServices from "../pages/Footer/TermsOfServices";
 import CookiesPolicy from "../pages/Footer/CookiesPolicy";

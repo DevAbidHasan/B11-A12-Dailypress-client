@@ -7,7 +7,8 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth, AuthContext } from "./AuthContext";
+import { auth, AuthContext } from "../contexts/AuthContext";
+
 
 
 const AuthProvider = ({ children }) => {
