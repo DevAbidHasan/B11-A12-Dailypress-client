@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
 import { auth, AuthContext } from "../../contexts/AuthContext";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -58,16 +59,30 @@ const Login = () => {
       });
 
       // Sign in with Google popup
-      const result = await signInWithPopup(auth, provider);
+      const res = await signInWithPopup(auth, provider);
+      console.log(res);
+      const userInfo = {
+        name: res.user.displayName,
+        email: res.user.email,
+        role: "user",
+        created_at: new Date().toISOString(),
+      };
+      console.log(userInfo);
 
-      Swal.fire({
-        title: "Congratulations ",
-        text: "Login Successful !!!",
-        icon: "success",
-        button: "OK",
-      });
+      const userRes = await axios.post("http://localhost:3000/users", userInfo);
+      console.log(userRes);
 
-      navigate(`${location.state ? location.state : "/"}`);
+      if (userRes.data.insertedId) {
+        Swal.fire({
+          title: "Congratulations ",
+          text: "Login Successful !!!",
+          icon: "success",
+          button: "OK",
+        });
+        if(!userRes.data.insertedId)
+
+        navigate(`${location.state ? location.state : "/"}`);
+      }
     } catch (error) {
       // console.error("Google login error:", error);
       Swal.fire({
@@ -112,22 +127,6 @@ const Login = () => {
           <label className="font-semibold text-md my-2">Password</label>
 
           {/* password */}
-
-          {/* <input
-             {...register("password", { required: true, minLength : 6 })}
-            name="password"
-            type="password"
-            className="input w-full rounded-xs border bg-base-100 mb-3"
-            placeholder="Enter your password"
-          />
-          {errors.password?.type === "required" && (
-            <p className="text-red-600">password is required</p>
-          )}
-          {errors.password?.type === "minLength" && (
-            <p className="text-red-600">
-              password must be at least 6 characters
-            </p>
-          )} */}
           <input
             {...register("password", {
               required: "Password is required",
