@@ -17,6 +17,18 @@ const Register = () => {
   const { createUser, updateUser } = useContext(AuthContext);
   const link = location.state ? location.state : "/";
 
+   const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    console.log(image);
+    const formData = new FormData();
+    formData.append("image", image);
+    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key
+    }`;
+    const res = await axios.post(imageUploadUrl, formData);
+    setProfilePic(res.data.data.url);
+    console.log(profilePic);
+  };
+
   const onSubmit = (data) => {
     console.log(data);
     const email = data.email;
@@ -65,18 +77,7 @@ const Register = () => {
     })
   };
 
-  const handleImageUpload = async (e) => {
-    const image = e.target.files[0];
-    console.log(image);
-    const formData = new FormData();
-    formData.append("image", image);
-    const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_image_upload_key
-    }`;
-    const res = await axios.post(imageUploadUrl, formData);
-    setProfilePic(res.data.data.url);
-    console.log(profilePic);
-  };
+ 
 
   return (
     <div className="flex mt-6 items-center justify-center">
@@ -98,8 +99,8 @@ const Register = () => {
               {errors.email?.type === "required" && (
                 <p className="text-red-500">Name is required</p>
               )}
-              {/* name field */}
-              <label className="label">Your Name</label>
+              {/* image field */}
+              <label className="label">Your Profile</label>
               <input
                 type="file"
                 onChange={handleImageUpload}

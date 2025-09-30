@@ -74,13 +74,8 @@ const AddArticle = () => {
               </p>
             </fieldset>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4">
-              <label className="font-bold"> User Email</label>
-              <input
-                type="text"
-                name="email"
-                className="input w-full"
-                value={user.email}
-              />
+              <label className="font-bold"> Article Publisher</label>
+              
             </fieldset>
           </div>
 
