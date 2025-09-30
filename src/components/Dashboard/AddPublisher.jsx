@@ -51,7 +51,7 @@ const AddPublisher = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/publishers",
+        "https://b11-a12-dailypress-server.vercel.app/publishers",
         publisherInfo
       );
       console.log(res);

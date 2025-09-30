@@ -19,6 +19,8 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from || "/";
+  
 
   // handle manual login
   const handleLogin = (e) => {
@@ -33,7 +35,7 @@ const Login = () => {
           icon: "success",
           button: "OK",
         });
-        navigate(`${location.state ? location.state : "/"}`);
+        navigate(from);
       })
       .catch((error) => {
         Swal.fire({
@@ -69,7 +71,7 @@ const Login = () => {
       };
       console.log(userInfo);
 
-      const userRes = await axios.post("http://localhost:3000/users", userInfo);
+      const userRes = await axios.post("https://b11-a12-dailypress-server.vercel.app/users", userInfo);
       console.log(userRes);
 
       if (userRes.data.insertedId) {
@@ -79,9 +81,9 @@ const Login = () => {
           icon: "success",
           button: "OK",
         });
-        if(!userRes.data.insertedId)
+        // if(!)
 
-        navigate(`${location.state ? location.state : "/"}`);
+        navigate(from);
       }
     } catch (error) {
       // console.error("Google login error:", error);

@@ -43,7 +43,7 @@ const Register = () => {
             created_at : new Date().toISOString()
         }
 
-        const userRes = await axios.post("http://localhost:3000/users", userInfo);
+        const userRes = await axios.post("https://b11-a12-dailypress-server.vercel.app/users", userInfo);
         // console.log(userRes);
         const UserProfile = {
             displayName : data.name,

@@ -13,7 +13,7 @@ const Users = () => {
   } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/users");
+      const res = await axios.get("https://b11-a12-dailypress-server.vercel.app/users");
       return res.data;
     },
   });
@@ -38,7 +38,7 @@ const Users = () => {
 
     if (confirm.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/user/${id}`);
+        await axios.delete(`https://b11-a12-dailypress-server.vercel.app/user/${id}`);
         // Update UI after deletion
         setRemainingUsers(users.filter((user) => user._id !== id));
         queryClient.invalidateQueries(["users"]); // Refresh data from server if needed
