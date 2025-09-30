@@ -13,6 +13,10 @@ import AddArticle from "../components/AddArticle";
 import UserProfile from "../components/UserProfile";
 import PrivateRoute from "../provider/PrivateRoute";
 import PremiumArticles from "../components/PremiumArticles";
+import Dashboard from "../components/Dashboard/Dashboard";
+import AllUsers from "../components/Dashboard/AllUsers";
+import AddPublisher from "../components/Dashboard/AddPublisher";
+import AllDashboardArticles from "../components/Dashboard/AllDashboardArticles";
 
 
 export const router = createBrowserRouter([
@@ -64,6 +68,28 @@ export const router = createBrowserRouter([
 
       }
     ],
+  },
+  {
+    path : "dashboard",
+    Component : Dashboard,
+    children : [
+      {
+        index : true,
+        Component : AllUsers
+      },
+      {
+        path : "all-users",
+        Component : AllUsers
+      },
+      {
+        path : "all-articles",
+        Component : AllDashboardArticles
+      },
+      {
+        path : "add-publisher",
+        Component : AddPublisher
+      }
+    ]
   },
   {
     path : "terms-of-services",

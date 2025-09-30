@@ -44,7 +44,7 @@ const Contact = () => {
         Get In Touch
       </h2>
 
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
         {/* Lottie Animation */}
         <div className="w-full flex justify-center">
           <Lottie
@@ -57,13 +57,12 @@ const Contact = () => {
         <div className="w-full max-w-lg bg-white shadow-lg rounded-2xl p-6 md:p-8 border border-gray-100">
           <form className="space-y-6 inter" onSubmit={handleSubmit}>
             {/* Name */}
-           
               <input
                 type="text"
                 name="name"
                 required
                 className="peer w-full rounded-lg border border-gray-300 px-3 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                placeholder="Your Name"
+                placeholder=" Name"
               />
               {/* <label className="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-sm peer-focus:text-blue-600">
                 Your Name
@@ -77,7 +76,7 @@ const Contact = () => {
                 name="email"
                 required
                 className="peer w-full rounded-lg border border-gray-300 px-3 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                placeholder="Your Email"
+                placeholder=" Email"
               />
              
 
@@ -88,7 +87,7 @@ const Contact = () => {
                 name="message"
                 required
                 className="peer w-full rounded-lg border border-gray-300 px-3 py-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                placeholder="Your Message"
+                placeholder=" Message"
               ></textarea>
             
 
