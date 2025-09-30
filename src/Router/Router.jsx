@@ -17,6 +17,7 @@ import Dashboard from "../components/Dashboard/Dashboard";
 import AllUsers from "../components/Dashboard/AllUsers";
 import AddPublisher from "../components/Dashboard/AddPublisher";
 import AllDashboardArticles from "../components/Dashboard/AllDashboardArticles";
+import ArticleDetails from "../components/ArticleDetails";
 
 
 export const router = createBrowserRouter([
@@ -94,6 +95,15 @@ export const router = createBrowserRouter([
   {
     path : "terms-of-services",
     Component : TermsOfServices
+  },
+  {
+    path : "/article-details/:id",
+    loader : ({params})=> fetch(`https://b11-a12-dailypress-server.vercel.app/article-details/${params.id}`),
+    element : (
+      <PrivateRoute>
+        <ArticleDetails></ArticleDetails>
+      </PrivateRoute>
+    )
   },
   {
     path : "cookies-policy",
