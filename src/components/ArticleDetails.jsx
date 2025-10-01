@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { Link, useLoaderData } from "react-router";
 
 const ArticleDetails = () => {
@@ -6,6 +7,11 @@ const ArticleDetails = () => {
 
   return (
     <div className="w-11/12 max-w-4xl mx-auto my-10 p-6">
+        <Helmet>
+            <title>
+                Dailypress || Article Details
+            </title>
+        </Helmet>
       {/* Card Container */}
       <div className="bg-white shadow-lg rounded-xl overflow-hidden transition hover:shadow-2xl">
         {/* Article Image */}

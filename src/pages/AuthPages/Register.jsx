@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const Register = () => {
   const {
@@ -81,6 +82,11 @@ const Register = () => {
 
   return (
     <div className="flex mt-6 items-center justify-center">
+      <Helmet>
+            <title>
+                Dailypress || User Registration
+            </title>
+        </Helmet>
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
           <form onSubmit={handleSubmit(onSubmit)}>

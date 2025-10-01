@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
 
 const Users = () => {
@@ -55,6 +56,11 @@ const Users = () => {
 
   return (
     <div className="w-11/12 mx-auto">
+        <Helmet>
+            <title>
+                Dailypress || All users
+            </title>
+        </Helmet>
       <h2 className="text-xl md:text-2xl font-bold text-center mb-6 text-blue-600">
         Registered Users ({displayedUsers.length})
       </h2>

@@ -18,7 +18,7 @@ const AllArticles = () => {
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("pending");
 
-  const { data: articles = [], isLoading } = useQuery({
+  const { data: articles = [], isLoading, refetch } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const res = await axios.get(
@@ -32,7 +32,7 @@ const AllArticles = () => {
   const [currentArticle, setCurrentArticle] = useState(null);
   const [declineReason, setDeclineReason] = useState("");
 
-  const handleApprove = async (id) => {
+  const handlePremium = async (id) => {
     try {
       await axios.patch(
         `https://b11-a12-dailypress-server.vercel.app/articles/${id}/approve`
@@ -81,15 +81,19 @@ const AllArticles = () => {
     }
   };
 
-  const handlePremium = async (id) => {
+  const handleApprove = async (id) => {
+    console.log(id);
     try {
       await axios.patch(
-        `https://b11-a12-dailypress-server.vercel.app/articles/${id}/premium`
+        `http://localhost:3000/article/${id}/status`, {
+            status : "accepted"
+        }
       );
-      toast.success("Article is now premium!");
-      queryClient.invalidateQueries(["articles"]);
+      toast.success("Article is now accepted by the admin!");
+      refetch();
+      
     } catch {
-      toast.error("Failed to make premium.");
+      toast.error("Failed to accept.");
     }
   };
 
@@ -239,12 +243,15 @@ const AllArticles = () => {
                     >
                       <FaTimes className="mr-1" /> Decline
                     </button>
-                    <Link to={`/article-details/${article._id}`}
-                      // later you can open a modal or navigate
-                      className="flex-1 px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center text-sm"
-                    >
-                      <FaInfoCircle className="mr-1" /> Details
-                    </Link>
+                    <button>
+                      <Link
+                        to={`/article-details/${article._id}`}
+                        // later you can open a modal or navigate
+                        className="flex-1 px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center text-sm"
+                      >
+                        <FaInfoCircle className="mr-1" /> Details
+                      </Link>
+                    </button>
 
                     <button
                       onClick={() => handlePremium(article._id)}

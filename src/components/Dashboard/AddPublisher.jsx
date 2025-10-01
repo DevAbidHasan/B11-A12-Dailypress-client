@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
 
 const AddPublisher = () => {
   const {
@@ -71,6 +72,11 @@ const AddPublisher = () => {
 
   return (
     <div className="w-11/12 mx-auto my-10 md:my-16">
+        <Helmet>
+            <title>
+                Dailypress || Add publisher
+            </title>
+        </Helmet>
       <h2 className="text-center text-2xl md:text-3xl font-bold text-blue-600 mb-8">
         Add Publisher
       </h2>

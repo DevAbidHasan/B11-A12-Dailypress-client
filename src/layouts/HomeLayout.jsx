@@ -4,6 +4,7 @@ import FAQ from '../pages/ExtraPages/FAQ';
 import Contact from '../pages/ExtraPages/Contact';
 import Plan from '../components/Plan';
 import Community from '../components/Community';
+import { Helmet } from 'react-helmet';
 
 const HomeLayout = () => {
   const [showModal, setShowModal] = useState(false);
@@ -27,9 +28,14 @@ const HomeLayout = () => {
 
   return (
     <div className="relative">
+        <Helmet>
+            <title>
+                Dailypress || Homepage
+            </title>
+        </Helmet>
       {/* Homepage content */}
       <div className={`${showModal ? 'filter brightness-90 blur-sm transition duration-300' : ''}`}>
-        <h2 className="text-2xl font-semibold mb-6">this is home</h2>
+        {/* <h2 className="text-2xl font-semibold mb-6">this is home</h2> */}
         <Plan />
         <Community />
         <FAQ />
