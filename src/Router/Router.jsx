@@ -18,6 +18,8 @@ import AllUsers from "../components/Dashboard/AllUsers";
 import AddPublisher from "../components/Dashboard/AddPublisher";
 import AllDashboardArticles from "../components/Dashboard/AllDashboardArticles";
 import ArticleDetails from "../components/ArticleDetails";
+import Subscriptions from "../pages/ExtraPages/Subscriptions";
+import MyArticles from "../pages/ExtraPages/MyArticles";
 
 
 export const router = createBrowserRouter([
@@ -30,8 +32,8 @@ export const router = createBrowserRouter([
         Component: HomeLayout,
       },
       {
-        path: "about",
-        element: <h2>this is about page</h2>,
+        path : "my-articles/:email",
+        Component : MyArticles
       },
       {
         path: "login",
@@ -66,7 +68,8 @@ export const router = createBrowserRouter([
         )
       },
       {
-
+        path : "subscription",
+        Component : Subscriptions
       }
     ],
   },

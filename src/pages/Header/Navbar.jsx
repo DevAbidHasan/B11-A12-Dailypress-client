@@ -121,7 +121,7 @@ const Navbar = () => {
           <NavLink to="/" className="hover:text-white ">Home</NavLink>
           <NavLink  className="hover:text-white " to="/all-articles">All Articles</NavLink>
           <NavLink to="/add-article" className="hover:text-white ">Add Article</NavLink>
-          <NavLink to={`/my-plants/${encodeURIComponent(user?.email)}`}
+          <NavLink to={`/my-articles/${encodeURIComponent(user?.email)}`}
  className="hover:text-white ">My Articles</NavLink>
           {/* <NavLink>{user.email}</NavLink> */}
           
