@@ -45,6 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "all-articles",
+        loader : ()=> fetch("http://localhost:3000/articles/accepted"),
         Component : AllArticles
       },
       {

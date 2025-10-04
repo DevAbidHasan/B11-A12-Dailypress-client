@@ -40,9 +40,9 @@ const ArticleDetails = () => {
               />
             )}
             <div>
-              <p className="font-semibold">{data.authorName}</p>
+              <p className="font-semibold text-blue-600">{data.authorName}</p>
               <p>{data.authorEmail}</p>
-              <p className="text-xs">
+              <p className="text-xs text-blue-600">
                 {data.posted
                   ? new Date(data.posted).toLocaleString()
                   : "Date not available"}

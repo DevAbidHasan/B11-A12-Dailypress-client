@@ -16,6 +16,7 @@ const AllPublishers = () => {
   });
 //   console.log(allPublishers);
 
+
   return (
     <div className="w-11/12 mx-auto my-13">
       <h2 className="text-3xl text-center md:text-4xl font-extrabold text-blue-600 mb-4">
@@ -30,7 +31,7 @@ const AllPublishers = () => {
             <img
               src={publisher.photo}
               alt={publisher.name}
-              className="w-24 h-24 rounded-full object-cover mb-4 border"
+              className="w-30 h-20 rounded-md object-cover mb-4"
             />
             <h3 className="text-lg font-semibold text-gray-800">
               {publisher.name}

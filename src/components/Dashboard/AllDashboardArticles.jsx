@@ -81,21 +81,23 @@ const AllArticles = () => {
     }
   };
 
-  const handleApprove = async (id) => {
-    console.log(id);
-    try {
-      await axios.patch(
-        `http://localhost:3000/article/${id}/status`, {
-            status : "accepted"
-        }
-      );
-      toast.success("Article is now accepted by the admin!");
-      refetch();
-      
-    } catch {
-      toast.error("Failed to accept.");
-    }
-  };
+  async function updateStatus(applicationId) {
+  try {
+    const res = await fetch(`http://localhost:3000/article/${applicationId}/status`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ state: "accepted" }), // 👈 only send what you want to change
+    });
+
+    const data = await res.json();
+    console.log("Update Response:", data);
+  } catch (error) {
+    console.error("Error updating status:", error);
+  }
+}
+
 
   if (isLoading)
     return <p className="text-center py-10">Loading articles...</p>;
@@ -232,7 +234,7 @@ const AllArticles = () => {
                 {activeTab === "pending" && (
                   <div className="mt-auto flex flex-wrap gap-2">
                     <button
-                      onClick={() => handleApprove(article._id)}
+                      onClick={() => updateStatus(article._id)}
                       className="flex-1 px-3 py-1.5 bg-green-500 text-white rounded hover:bg-green-600 flex items-center justify-center text-sm"
                     >
                       <FaCheck className="mr-1" /> Approve
@@ -241,7 +243,7 @@ const AllArticles = () => {
                       onClick={() => openDeclineModal(article)}
                       className="flex-1 px-3 py-1.5 bg-yellow-500 text-white rounded hover:bg-yellow-600 flex items-center justify-center text-sm"
                     >
-                      <FaTimes className="mr-1" /> Decline
+                      <FaTimes className="mr-1" /> Reject
                     </button>
                     <button>
                       <Link
