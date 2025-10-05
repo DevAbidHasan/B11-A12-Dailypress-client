@@ -7,13 +7,12 @@ const ArticleDetails = () => {
 
   return (
     <div className="w-11/12 max-w-4xl mx-auto my-10 p-6">
-        <Helmet>
-            <title>
-                Dailypress || Article Details
-            </title>
-        </Helmet>
+      <Helmet>
+        <title>DailyPress || {data.title || "Article Details"}</title>
+      </Helmet>
+
       {/* Card Container */}
-      <div className="bg-white shadow-lg rounded-xl overflow-hidden transition hover:shadow-2xl">
+      <div className="bg-white shadow-lg rounded-2xl overflow-hidden transition hover:shadow-2xl">
         {/* Article Image */}
         {data.image && (
           <img
@@ -24,42 +23,66 @@ const ArticleDetails = () => {
         )}
 
         {/* Content Section */}
-        <div className="p-6">
+        <div className="p-6 md:p-8">
+          {/* Category */}
+          {data.category && (
+            <div className="mb-3">
+              <span className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-sm font-semibold px-4 py-1.5 rounded-full shadow-md">
+                {data.category}
+              </span>
+            </div>
+          )}
+
           {/* Title */}
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3 leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-snug">
             {data.title}
           </h2>
 
-          {/* Author & Date */}
-          <div className="flex flex-wrap items-center text-sm text-gray-600 mb-4">
-            {data.authorPhoto && (
-              <img
-                src={data.authorPhoto}
-                alt={data.authorName}
-                className="w-10 h-10 rounded-full mr-3"
-              />
-            )}
-            <div>
-              <p className="font-semibold text-blue-600">{data.authorName}</p>
-              <p>{data.authorEmail}</p>
-              <p className="text-xs text-blue-600">
-                {data.posted
-                  ? new Date(data.posted).toLocaleString()
-                  : "Date not available"}
-              </p>
+          {/* Author, Date, Views */}
+          <div className="flex flex-wrap items-center justify-between border-b border-gray-200 pb-4 mb-6 text-sm text-gray-600">
+            <div className="flex items-center">
+              {data.authorPhoto && (
+                <img
+                  src={data.authorPhoto}
+                  alt={data.authorName}
+                  className="w-10 h-10 rounded-full mr-3"
+                />
+              )}
+              <div>
+                <p className="font-semibold text-blue-700">
+                  {data.authorName || "Unknown Author"}
+                </p>
+                {data.authorEmail && <p>{data.authorEmail}</p>}
+                <p className="text-xs text-gray-500">
+                  {data.posted
+                    ? new Date(data.posted).toLocaleString()
+                    : "Date not available"}
+                </p>
+              </div>
+            </div>
+
+            {/* Views */}
+            <div className="flex items-center mt-3 md:mt-0">
+              <span className="text-gray-600 text-base flex items-center">
+                👁️{" "}
+                <span className="ml-1 font-medium">
+                  {data.view ? data.view : 0}
+                </span>
+              </span>
             </div>
           </div>
 
           {/* Publisher */}
           {data.publisher && (
-            <p className="text-sm text-gray-700 mb-4">
-              <span className="font-semibold">Publisher: </span> {data.publisher}
+            <p className="text-sm text-gray-700 mb-5">
+              <span className="font-semibold text-gray-800">Publisher: </span>
+              {data.publisher}
             </p>
           )}
 
           {/* Description */}
-          <p className="text-gray-700 leading-relaxed text-justify mb-6">
-            {data.description}
+          <p className="text-gray-800 leading-relaxed text-justify mb-6">
+            {data.description || "No description available."}
           </p>
 
           {/* Status */}
@@ -78,11 +101,25 @@ const ArticleDetails = () => {
             </span>
           </p>
 
+          {/* Tags */}
+          {data.tags && data.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {data.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-100 text-gray-700 text-xs font-medium px-3 py-1 rounded-full hover:bg-gray-200 transition"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* Back Button */}
-          <div className="mt-6 flex justify-center">
+          <div className="flex justify-center">
             <Link
               to="/"
-              className="px-6 py-2 rounded-lg bg-blue-600 text-white font-medium shadow hover:bg-blue-700 transition"
+              className="px-6 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium shadow hover:shadow-lg hover:scale-105 transition"
             >
               ← Back to Home
             </Link>

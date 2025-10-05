@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 const AllArticles = () => {
   const data = useLoaderData();
@@ -48,15 +48,23 @@ const AllArticles = () => {
 
               {/* Footer */}
               <div className="mt-4 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                <span>👤 Publisher: {item.publisher}</span>
+                <span>
+                  👤 Publisher:{" "}
+                  <span className="text-yellow-500 font-bold">
+                    {item.publisher}
+                  </span>
+                </span>
                 <span>👁 {item.view} views</span>
               </div>
 
               {/* Button */}
               <div className="mt-4">
-                <button className="w-full btn btn-info hover:btn-secondary rounded-xl">
+                <Link
+                  className="w-full btn btn-info hover:btn-secondary rounded-xl"
+                  to={`/article/${item._id}`}
+                >
                   Details
-                </button>
+                </Link>
               </div>
             </div>
           </div>

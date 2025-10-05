@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
       },
       {
         path : "all-articles",
-        loader : ()=> fetch("http://localhost:3000/articles/accepted"),
+        loader : ()=> fetch("http://b11-a12-dailypress-server.vercel.app/articles/accepted"),
         Component : AllArticles
       },
       {
@@ -71,7 +71,16 @@ export const router = createBrowserRouter([
       {
         path : "subscription",
         Component : Subscriptions
-      }
+      },
+      {
+    path : "/article/:id",
+    loader : ({params})=> fetch(`http://localhost:3000/article/${params.id}`),
+    element : (
+      <PrivateRoute>
+        <ArticleDetails></ArticleDetails>
+      </PrivateRoute>
+    )
+  },
     ],
   },
   {
