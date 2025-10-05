@@ -8,9 +8,10 @@ import {
   FaStar,
   FaInfoCircle,
 } from "react-icons/fa";
-import { toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import Modal from "react-modal";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 Modal.setAppElement("#root");
 
@@ -31,6 +32,9 @@ const AllArticles = () => {
   const [declineModalOpen, setDeclineModalOpen] = useState(false);
   const [currentArticle, setCurrentArticle] = useState(null);
   const [declineReason, setDeclineReason] = useState("");
+  const [available, setAvailable ]= useState([...articles]);
+  console.log(available);
+  console.log(articles);
 
   const handlePremium = async (id) => {
     try {
@@ -92,7 +96,12 @@ const AllArticles = () => {
     });
 
     const data = await res.json();
-    console.log("Update Response:", data);
+    // console.log("Update Response:", data);
+    toast.success("Article is accepted successfully");
+    const remaining = available.filter(item=>item._id !== applicationId);
+    // console.log("remaining pending, ",remaining);
+    setAvailable(remaining);
+
   } catch (error) {
     console.error("Error updating status:", error);
   }
@@ -103,7 +112,7 @@ const AllArticles = () => {
     return <p className="text-center py-10">Loading articles...</p>;
 
   // Filtered data based on tab
-  const filteredArticles = articles.filter((a) => {
+  const filteredArticles = available.filter((a) => {
     if (activeTab === "pending") return a.state === "pending";
     if (activeTab === "accepted") return a.state === "approved";
     if (activeTab === "rejected") return a.state === "declined";
@@ -115,6 +124,7 @@ const AllArticles = () => {
       <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-600">
         All Articles
       </h2>
+      <Toaster/>
 
       {/* Tabs */}
       <div className="flex flex-col md:flex-row gap-3 mb-6">
@@ -237,7 +247,7 @@ const AllArticles = () => {
                       onClick={() => updateStatus(article._id)}
                       className="flex-1 px-3 py-1.5 bg-green-500 text-white rounded hover:bg-green-600 flex items-center justify-center text-sm"
                     >
-                      <FaCheck className="mr-1" /> Approve
+                      <FaCheck className="mr-1" /> Accept
                     </button>
                     <button
                       onClick={() => openDeclineModal(article)}
@@ -247,7 +257,7 @@ const AllArticles = () => {
                     </button>
                     <button>
                       <Link
-                        to={`/article-details/${article._id}`}
+                        to={`/article/${article._id}`}
                         // later you can open a modal or navigate
                         className="flex-1 px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center text-sm"
                       >

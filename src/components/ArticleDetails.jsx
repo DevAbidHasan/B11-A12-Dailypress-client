@@ -6,7 +6,7 @@ const ArticleDetails = () => {
   const data = useLoaderData() || {};
 
   return (
-    <div className="w-11/12 max-w-4xl mx-auto my-10 p-6">
+    <div className="w-11/12 max-w-4xl mx-auto my-10 p-1 md:p-6">
       <Helmet>
         <title>DailyPress || {data.title || "Article Details"}</title>
       </Helmet>

@@ -21,7 +21,6 @@ import ArticleDetails from "../components/ArticleDetails";
 import Subscriptions from "../pages/ExtraPages/Subscriptions";
 import MyArticles from "../pages/ExtraPages/MyArticles";
 
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -32,8 +31,8 @@ export const router = createBrowserRouter([
         Component: HomeLayout,
       },
       {
-        path : "my-articles/:email",
-        Component : MyArticles
+        path: "my-articles/:email",
+        Component: MyArticles,
       },
       {
         path: "login",
@@ -44,93 +43,97 @@ export const router = createBrowserRouter([
         Component: Register,
       },
       {
-        path : "all-articles",
-        loader : ()=> fetch("http://b11-a12-dailypress-server.vercel.app/articles/accepted"),
-        Component : AllArticles
+        path: "all-articles",
+        loader: () => fetch("http://localhost:3000/articles/accepted"),
+        Component: AllArticles,
       },
       {
-        path : "add-article",
-        element : (
-            <PrivateRoute>
-                <AddArticle></AddArticle>
-            </PrivateRoute>
-        )
+        path: "add-article",
+        element: (
+          <PrivateRoute>
+            <AddArticle></AddArticle>
+          </PrivateRoute>
+        ),
       },
       {
-        path : "user-profile",
-        Component : UserProfile
+        path: "user-profile",
+        Component: UserProfile,
       },
       {
-        path : "premium-articles",
-        element : (
-            <PrivateRoute>
-                <PremiumArticles></PremiumArticles>
-            </PrivateRoute>
-        )
+        path: "premium-articles",
+        element: (
+          <PrivateRoute>
+            <PremiumArticles></PremiumArticles>
+          </PrivateRoute>
+        ),
       },
       {
-        path : "subscription",
-        Component : Subscriptions
+        path: "subscription",
+        Component: Subscriptions,
       },
       {
-    path : "/article/:id",
-    loader : ({params})=> fetch(`http://localhost:3000/article/${params.id}`),
-    element : (
-      <PrivateRoute>
-        <ArticleDetails></ArticleDetails>
-      </PrivateRoute>
-    )
-  },
+        path: "/article/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/article/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <ArticleDetails></ArticleDetails>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
-    path : "dashboard",
-    Component : Dashboard,
-    children : [
+    path: "dashboard",
+    Component: Dashboard,
+    children: [
       {
-        index : true,
-        Component : AllUsers
+        index: true,
+        Component: AllUsers,
       },
       {
-        path : "all-users",
-        Component : AllUsers
+        path: "article/:id",
+        loader: ({ params }) =>
+          fetch(
+            `https://b11-a12-dailypress-server.vercel.app/article-details/${params.id}`
+          ),
+        element: (
+          <PrivateRoute>
+            <ArticleDetails></ArticleDetails>
+          </PrivateRoute>
+        ),
       },
       {
-        path : "all-articles",
-        Component : AllDashboardArticles
+        path: "all-users",
+        Component: AllUsers,
       },
       {
-        path : "add-publisher",
-        Component : AddPublisher
-      }
-    ]
+        path: "all-articles",
+        Component: AllDashboardArticles,
+      },
+      {
+        path: "add-publisher",
+        Component: AddPublisher,
+      },
+    ],
   },
   {
-    path : "terms-of-services",
-    Component : TermsOfServices
+    path: "terms-of-services",
+    Component: TermsOfServices,
   },
   {
-    path : "/article-details/:id",
-    loader : ({params})=> fetch(`https://b11-a12-dailypress-server.vercel.app/article-details/${params.id}`),
-    element : (
-      <PrivateRoute>
-        <ArticleDetails></ArticleDetails>
-      </PrivateRoute>
-    )
+    path: "cookies-policy",
+    Component: CookiesPolicy,
   },
   {
-    path : "cookies-policy",
-    Component : CookiesPolicy
+    path: "developer-resources",
+    Component: DeveloperResources,
   },
   {
-    path : "developer-resources",
-    Component : DeveloperResources
+    path: "privacy",
+    Component: PrivacyPolicy,
   },
-  {
-    path : "privacy",
-    Component : PrivacyPolicy
-  },
- 
+
   {
     path: "*",
     Component: ErrorPage,
