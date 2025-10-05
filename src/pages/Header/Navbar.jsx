@@ -101,14 +101,14 @@ const Navbar = () => {
           {
             <NavLink to="/premium-articles">Premium Articles</NavLink>
           }
-          {/* <div >
+          <div >
             
             {
-              user ? (<Link to="/user-dashboard" className="btn btn-primary">
-                Dashboard
+              user ? (<Link to="/user-profile" className="btn btn-primary">
+                Profile
               </Link>) : ("")
             }
-          </div> */}
+          </div>
           <div  className="">{user ? (<button onClick={handleLogOut} className='btn btn-warning'>Logout</button>) : (<Link className='btn' to="/login">Login</Link>)}</div>
           <div>
             {
@@ -134,8 +134,8 @@ const Navbar = () => {
               ) 
             }
             {
-              user ? (<Link to="/user-dashboard" className="btn btn-primary">
-                Dashboard
+              user ? (<Link to="/user-profile" className="btn btn-primary">
+                Profile
               </Link>) : ("")
             }
             {/* <ThemeToggle /> */}

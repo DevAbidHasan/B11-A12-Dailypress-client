@@ -33,7 +33,11 @@ export const router = createBrowserRouter([
       {
         path: "my-articles/:email",
         loader : ({params}) => fetch(`http://localhost:3000/myArticles/${params.email}`),
-        Component: MyArticles,
+        element  : (
+          <PrivateRoute>
+            <MyArticles></MyArticles>
+          </PrivateRoute>
+        )
       },
       {
         path: "login",

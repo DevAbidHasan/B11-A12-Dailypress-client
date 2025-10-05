@@ -6,6 +6,7 @@ import Plan from '../components/Plan';
 import Community from '../components/Community';
 import { Helmet } from 'react-helmet';
 import AllPublishers from './AllPublishers';
+import Users from '../components/Dashboard/Users';
 
 const HomeLayout = () => {
   const [showModal, setShowModal] = useState(false);
@@ -39,6 +40,7 @@ const HomeLayout = () => {
         {/* <h2 className="text-2xl font-semibold mb-6">this is home</h2> */}
         <AllPublishers></AllPublishers>
         <Plan />
+        <Users/>
         <Community />
         <FAQ />
         <Contact />
