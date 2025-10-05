@@ -1,25 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import {
-  FaCheck,
-  FaTimes,
-  FaTrash,
-  FaStar,
-  FaInfoCircle,
-} from "react-icons/fa";
+import { FaCheck, FaTimes, FaStar, FaInfoCircle } from "react-icons/fa";
 import { toast, Toaster } from "react-hot-toast";
 import Modal from "react-modal";
 import { Link } from "react-router";
-import Swal from "sweetalert2";
 
 Modal.setAppElement("#root");
 
 const AllArticles = () => {
   const queryClient = useQueryClient();
   const [activeTab, setActiveTab] = useState("pending");
+  const [available, setAvailable] = useState([]);
 
-  const { data: articles = [], isLoading, refetch } = useQuery({
+  // Fetch articles
+  const { data: articles = [], isLoading } = useQuery({
     queryKey: ["articles"],
     queryFn: async () => {
       const res = await axios.get(
@@ -29,12 +24,14 @@ const AllArticles = () => {
     },
   });
 
+  // Sync articles with available state
+  useEffect(() => {
+    setAvailable(articles);
+  }, [articles]);
+
   const [declineModalOpen, setDeclineModalOpen] = useState(false);
   const [currentArticle, setCurrentArticle] = useState(null);
   const [declineReason, setDeclineReason] = useState("");
-  const [available, setAvailable ]= useState([...articles]);
-  console.log(available);
-  console.log(articles);
 
   const handlePremium = async (id) => {
     try {
@@ -46,10 +43,6 @@ const AllArticles = () => {
     } catch {
       toast.error("Failed to approve article.");
     }
-  };
-
-  const handleViewDetails = (id) => {
-    alert(id);
   };
 
   const openDeclineModal = (article) => {
@@ -66,7 +59,11 @@ const AllArticles = () => {
       toast.success("Article declined!");
       setDeclineModalOpen(false);
       setDeclineReason("");
-      queryClient.invalidateQueries(["articles"]);
+
+      // Remove declined article from available
+      setAvailable((prev) =>
+        prev.filter((item) => item._id !== currentArticle._id)
+      );
     } catch {
       toast.error("Failed to decline article.");
     }
@@ -79,39 +76,33 @@ const AllArticles = () => {
         `https://b11-a12-dailypress-server.vercel.app/articles/${id}`
       );
       toast.success("Article deleted!");
-      queryClient.invalidateQueries(["articles"]);
+      setAvailable((prev) => prev.filter((item) => item._id !== id));
     } catch {
       toast.error("Failed to delete article.");
     }
   };
 
-  async function updateStatus(applicationId) {
-  try {
-    const res = await fetch(`http://localhost:3000/article/${applicationId}/status`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ state: "accepted" }), // 👈 only send what you want to change
-    });
+  const updateStatus = async (id) => {
+    try {
+      await fetch(`http://localhost:3000/article/${id}/status`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ state: "accepted" }),
+      });
+      toast.success("Article is accepted successfully");
 
-    const data = await res.json();
-    // console.log("Update Response:", data);
-    toast.success("Article is accepted successfully");
-    const remaining = available.filter(item=>item._id !== applicationId);
-    // console.log("remaining pending, ",remaining);
-    setAvailable(remaining);
-
-  } catch (error) {
-    console.error("Error updating status:", error);
-  }
-}
-
+      // Remove approved article immediately
+      setAvailable((prev) => prev.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update status");
+    }
+  };
 
   if (isLoading)
     return <p className="text-center py-10">Loading articles...</p>;
 
-  // Filtered data based on tab
+  // Filter articles based on active tab
   const filteredArticles = available.filter((a) => {
     if (activeTab === "pending") return a.state === "pending";
     if (activeTab === "accepted") return a.state === "approved";
@@ -124,7 +115,7 @@ const AllArticles = () => {
       <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-600">
         All Articles
       </h2>
-      <Toaster/>
+      <Toaster />
 
       {/* Tabs */}
       <div className="flex flex-col md:flex-row gap-3 mb-6">
@@ -172,21 +163,17 @@ const AllArticles = () => {
               key={article._id}
               className="bg-white shadow-md rounded-lg overflow-hidden flex flex-col hover:shadow-xl transition duration-300"
             >
-              {/* Thumbnail */}
               <img
                 src={article.image}
                 alt={article.title}
                 className="w-full h-48 object-cover"
               />
 
-              {/* Content */}
               <div className="p-4 flex flex-col flex-grow">
-                {/* Title */}
                 <h3 className="font-bold text-lg mb-2 line-clamp-2">
                   {article.title}
                 </h3>
 
-                {/* Author Info */}
                 <div className="flex items-center gap-3 mb-3">
                   {article.authorPhoto && (
                     <img
@@ -196,21 +183,12 @@ const AllArticles = () => {
                     />
                   )}
                   <div>
-                    <p className="font-semibold text-sm">
-                      {article.authorName}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {article.authorEmail}
-                    </p>
+                    <p className="font-semibold text-sm">{article.authorName}</p>
+                    <p className="text-xs text-gray-500">{article.authorEmail}</p>
                   </div>
                 </div>
 
-                {/* Metadata */}
                 <div className="text-sm text-gray-600 space-y-1 mb-4">
-                  {/* <p>
-                    <span className="font-medium">Publisher:</span>{" "}
-                    {article.publisher}
-                  </p> */}
                   <p>
                     <span className="font-medium">Posted:</span>{" "}
                     {new Date(article.posted).toLocaleString()}
@@ -240,7 +218,6 @@ const AllArticles = () => {
                   </p>
                 </div>
 
-                {/* Buttons (only for Pending tab) */}
                 {activeTab === "pending" && (
                   <div className="mt-auto flex flex-wrap gap-2">
                     <button
@@ -258,13 +235,11 @@ const AllArticles = () => {
                     <button>
                       <Link
                         to={`/article/${article._id}`}
-                        // later you can open a modal or navigate
                         className="flex-1 px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center text-sm"
                       >
                         <FaInfoCircle className="mr-1" /> Details
                       </Link>
                     </button>
-
                     <button
                       onClick={() => handlePremium(article._id)}
                       className="flex-1 px-3 py-1.5 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center justify-center text-sm"

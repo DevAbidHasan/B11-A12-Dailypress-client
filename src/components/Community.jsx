@@ -74,12 +74,7 @@ const Community = () => {
         ))}
       </div>
 
-      {/* Call to Action */}
-      <div className="flex justify-center mt-10">
-        <button className="btn btn-primary px-6 py-2 rounded-md">
-          Join Our Community
-        </button>
-      </div>
+    
     </div>
   );
 };
