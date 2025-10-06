@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-articles/:email",
-        loader : ({params}) => fetch(`http://localhost:3000/myArticles/${params.email}`),
+        loader : ({params}) => fetch(`https://b11-a12-dailypress-server.vercel.app/myArticles/${params.email}`),
         element  : (
           <PrivateRoute>
             <MyArticles></MyArticles>
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "user-profile/:email",
-        loader : ({params}) => fetch(`http://localhost:3000/user/${params.email}`),
+        loader : ({params}) => fetch(`https://b11-a12-dailypress-server.vercel.app/user/${params.email}`),
         element : (
           <PrivateRoute>
             <UserProfile></UserProfile>

@@ -11,7 +11,7 @@ const ArticleDetails = () => {
     const handleViewsCount = async () => {
       const nextView = (Number(data.view) || 0) + 1;
       const res = await fetch(
-        `http://localhost:3000/article-details/${data._id}`,
+        `https://b11-a12-dailypress-server.vercel.app/article-details/${data._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

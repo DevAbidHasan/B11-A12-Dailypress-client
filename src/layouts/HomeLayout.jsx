@@ -7,6 +7,7 @@ import Community from '../components/Community';
 import { Helmet } from 'react-helmet';
 import AllPublishers from './AllPublishers';
 import Users from '../components/Dashboard/Users';
+import Slider from '../components/Slider';
 
 const HomeLayout = () => {
   const [showModal, setShowModal] = useState(false);
@@ -38,6 +39,7 @@ const HomeLayout = () => {
       {/* Homepage content */}
       <div className={`${showModal ? 'filter brightness-90 blur-sm transition duration-300' : ''}`}>
         {/* <h2 className="text-2xl font-semibold mb-6">this is home</h2> */}
+        <Slider></Slider>
         <AllPublishers></AllPublishers>
         <Plan />
         <Users/>

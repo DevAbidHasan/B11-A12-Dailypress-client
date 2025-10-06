@@ -25,7 +25,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/user/${user.email}`, {
+      const res = await fetch(`https://b11-a12-dailypress-server.vercel.app/user/${user.email}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newName }),

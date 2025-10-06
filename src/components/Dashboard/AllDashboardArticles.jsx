@@ -84,7 +84,7 @@ const AllArticles = () => {
 
   const updateStatus = async (id) => {
     try {
-      await fetch(`http://localhost:3000/article/${id}/status`, {
+      await fetch(`https://b11-a12-dailypress-server.vercel.app/article/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ state: "accepted" }),
