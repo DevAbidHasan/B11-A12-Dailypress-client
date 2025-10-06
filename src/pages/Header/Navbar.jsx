@@ -134,7 +134,7 @@ const Navbar = () => {
               ) 
             }
             {
-              user ? (<Link to="/user-profile" className="btn btn-primary">
+              user ? (<Link to={`/user-profile/${user.email}`} className="btn btn-primary">
                 Profile
               </Link>) : ("")
             }
