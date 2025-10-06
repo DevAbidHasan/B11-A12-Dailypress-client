@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
+import toast, { Toaster } from "react-hot-toast";
 import { Link, useLoaderData } from "react-router";
 
 const ArticleDetails = () => {
   const data = useLoaderData() || {};
+  const [final, setFinal] = useState(data.view);
+
+  useEffect(() => {
+    const handleViewsCount = async () => {
+      const nextView = (Number(data.view) || 0) + 1;
+      const res = await fetch(
+        `http://localhost:3000/article-details/${data._id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ view: nextView }),
+        }
+      );
+      setFinal(nextView);
+    };
+    handleViewsCount();
+  }, [data.view, data._id]);
 
   return (
     <div className="w-11/12 max-w-4xl mx-auto my-10 p-1 md:p-6">
@@ -44,14 +62,11 @@ const ArticleDetails = () => {
               {data.authorPhoto && (
                 <img
                   src={data.authorPhoto}
-                  alt={data.authorName}
+                  alt={data.publisher}
                   className="w-10 h-10 rounded-full mr-3"
                 />
               )}
               <div>
-                <p className="font-semibold text-blue-700">
-                  {data.authorName || "Unknown Author"}
-                </p>
                 {data.authorEmail && <p>{data.authorEmail}</p>}
                 <p className="text-xs text-gray-500">
                   {data.posted
@@ -64,10 +79,7 @@ const ArticleDetails = () => {
             {/* Views */}
             <div className="flex items-center mt-3 md:mt-0">
               <span className="text-gray-600 text-base flex items-center">
-                👁️{" "}
-                <span className="ml-1 font-medium">
-                  {data.view ? data.view : 0}
-                </span>
+                👁️ <span className="ml-1 font-medium">{final ? final : 0}</span>
               </span>
             </div>
           </div>
